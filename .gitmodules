@@ -1,0 +1,3 @@
+[submodule "test-entity"]
+	path = test-entity
+	url = https://github.com/Molang00/test-entity
