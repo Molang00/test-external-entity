@@ -75,16 +75,13 @@ allprojects {
 }
 
 project(":test-entity") {
-    dependencies {
-        implementation(project(":test-entity"))
-    }
 }
 
-project(":test-api") {
-    dependencies {
-        implementation(project(":test-entity"))
-    }
-}
+//project(":test-api") {
+//    dependencies {
+//        implementation(project(":test-entity"))
+//    }
+//}
 
 project(":") {
     dependencies {
