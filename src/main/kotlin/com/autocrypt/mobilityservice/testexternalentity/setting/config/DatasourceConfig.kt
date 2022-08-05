@@ -7,7 +7,6 @@ import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
 import org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
@@ -19,7 +18,10 @@ import javax.sql.DataSource
 
 @Configuration
 @EnableJpaRepositories(
-    basePackages = ["com.autocrypt.mobilityservice.testentity.entity", "com.autocrypt.mobilityservice.testexternalentity"],
+    basePackages = [
+        "com.autocrypt.mobilityservice.testentity.entity",
+        "com.autocrypt.mobilityservice.testexternalentity"
+                   ],
     entityManagerFactoryRef = "entityManagerFactory",
     transactionManagerRef = "transactionManager"
 )
@@ -28,12 +30,17 @@ class DatasourceConfig {
     @Bean(name = ["dataSource"])
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
     fun dataSource(): DataSource {
-        return DataSourceBuilder.create().type(HikariDataSource::class.java).build()
+        return DataSourceBuilder
+            .create()
+            .type(HikariDataSource::class.java)
+            .build()
     }
 
     @Primary
     @Bean(name = ["entityManagerFactory"])
-    fun entityManagerFactory(builder: EntityManagerFactoryBuilder): LocalContainerEntityManagerFactoryBean {
+    fun entityManagerFactory(
+        builder: EntityManagerFactoryBuilder
+    ): LocalContainerEntityManagerFactoryBean {
         return builder
             .dataSource(dataSource())
             .packages(
@@ -54,7 +61,12 @@ class DatasourceConfig {
 
     @Primary
     @Bean("transactionManager")
-    fun transactionManager(builder: EntityManagerFactoryBuilder): PlatformTransactionManager? {
-        return JpaTransactionManager(entityManagerFactory(builder).getObject()!!)
+    fun transactionManager(
+        builder: EntityManagerFactoryBuilder
+    ): PlatformTransactionManager? {
+        return JpaTransactionManager(
+            entityManagerFactory(builder)
+                .getObject()!!
+        )
     }
 }

@@ -77,12 +77,6 @@ allprojects {
 project(":test-entity") {
 }
 
-//project(":test-api") {
-//    dependencies {
-//        implementation(project(":test-entity"))
-//    }
-//}
-
 project(":") {
     dependencies {
         implementation(project(":test-entity"))
